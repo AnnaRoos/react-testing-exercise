@@ -14,4 +14,23 @@ describe('Options component', () => {
 
     expect(altTexts).toEqual(['Chocolate scoop', 'Vanilla scoop']);
   });
+
+  test('should display image for each topping option from server', async () => {
+    render(<Options optionType="toppings" />);
+
+    //always use await and findBy when search for asynchronous content
+    const toppingImages = await screen.findAllByRole('img', {
+      name: /topping$/i,
+    });
+
+    expect(toppingImages).toHaveLength(3);
+
+    const altTexts = toppingImages.map((el) => el.alt);
+
+    expect(altTexts).toEqual([
+      'Strawberry topping',
+      'Fudge topping',
+      'M&Ms topping',
+    ]);
+  });
 });
