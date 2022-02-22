@@ -37,11 +37,11 @@ describe('subtotals', () => {
     render(<Options optionType="toppings" />);
 
     //check that subtotals start at zero
-    const toppingsSubtotals = screen.getByText('Toppings total: $', {
+    const toppingsSubtotal = screen.getByText('Toppings total: $', {
       exact: false,
     });
 
-    expect(toppingsSubtotals).toHaveTextContent('0.00');
+    expect(toppingsSubtotal).toHaveTextContent('0.00');
 
     //check one box
     const strawberryCheckbox = await screen.findByRole('checkbox', {
@@ -51,7 +51,7 @@ describe('subtotals', () => {
     const user = userEvent.setup();
     await user.click(strawberryCheckbox);
 
-    expect(toppingsSubtotals).toHaveTextContent('1.50');
+    expect(toppingsSubtotal).toHaveTextContent('1.50');
 
     //check another box
     const fudgeCheckbox = await screen.findByRole('checkbox', {
@@ -60,13 +60,13 @@ describe('subtotals', () => {
 
     await user.click(fudgeCheckbox);
 
-    expect(toppingsSubtotals).toHaveTextContent('3.00');
+    expect(toppingsSubtotal).toHaveTextContent('3.00');
 
     //check off one box
 
     await user.click(strawberryCheckbox);
 
-    expect(toppingsSubtotals).toHaveTextContent('1.50');
+    expect(toppingsSubtotal).toHaveTextContent('1.50');
   });
 });
 

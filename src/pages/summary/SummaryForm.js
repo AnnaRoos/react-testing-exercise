@@ -4,7 +4,7 @@ import Form from 'react-bootstrap/Form';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 
-const SummaryForm = () => {
+const SummaryForm = ({ changePhaseHandler }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const checkboxHandler = (event) => {
@@ -35,7 +35,11 @@ const SummaryForm = () => {
           onChange={checkboxHandler}
           label={checkboxLabel}
         />
-        <Button variant="primary" type="submit" disabled={!isChecked}>
+        <Button
+          variant="primary"
+          disabled={!isChecked}
+          onClick={() => changePhaseHandler('complete')}
+        >
           Confirm order
         </Button>
       </Form.Group>

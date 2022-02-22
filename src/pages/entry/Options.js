@@ -7,6 +7,7 @@ import AlertBanner from '../common/AlertBanner';
 import ScoopOption from './ScoopOption';
 import ToppingOption from './ToppingOption';
 
+import { formatCurrency } from '../../utils';
 import { pricePerItem } from '../../constants';
 import { useOrderDetails } from '../../contexts/OrderDetails';
 
@@ -45,11 +46,11 @@ const Options = ({ optionType }) => {
   return (
     <>
       <h2>{title}</h2>
-      <p>{pricePerItem[optionType]} each</p>
+      <p>{formatCurrency(pricePerItem[optionType])} each</p>
       <p>
         {title} total: {orderDetails.totals[optionType]}
       </p>
-      <Row>{optionItems}</Row>;
+      <Row>{optionItems}</Row>
     </>
   );
 };
