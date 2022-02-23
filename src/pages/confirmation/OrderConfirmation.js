@@ -8,9 +8,8 @@ import { useOrderDetails } from '../../contexts/OrderDetails';
 
 const OrderConfirmation = ({ changePhaseHandler }) => {
   const [orderNumber, setOrderNumber] = useState(null);
-  const [orderDetails, updateItemCount, resetOrder] = useOrderDetails();
+  const [, , resetOrder] = useOrderDetails();
 
-  //Need to reset context Maps
   useEffect(() => {
     axios
       .post(`http://localhost:3030/order`)
@@ -24,20 +23,18 @@ const OrderConfirmation = ({ changePhaseHandler }) => {
   };
 
   return (
-    <div>
+    <>
       {orderNumber ? (
-        <>
+        <div style={{ textAlign: 'center' }}>
           <h2>Thank you!</h2>
           <h3>Your order number is {orderNumber}</h3>
           <p>as per our terms and conditions, nothing will happen now</p>
-          <Button variant="primary" onClick={createNewOrderHandler}>
-            Create new order
-          </Button>
-        </>
+          <Button onClick={createNewOrderHandler}>Create new order</Button>
+        </div>
       ) : (
-        <h1>Loading...</h1>
+        <div>Loading...</div>
       )}
-    </div>
+    </>
   );
 };
 

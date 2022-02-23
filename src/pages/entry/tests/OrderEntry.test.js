@@ -18,7 +18,7 @@ describe('OrderEntry component', () => {
         res(ctx.status(500))
       )
     );
-    render(<OrderEntry />);
+    render(<OrderEntry changePhaseHandler={jest.fn()} />);
 
     await waitFor(async () => {
       const alerts = await screen.findAllByRole('alert');

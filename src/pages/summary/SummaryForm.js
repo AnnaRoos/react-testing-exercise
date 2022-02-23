@@ -26,6 +26,10 @@ const SummaryForm = ({ changePhaseHandler }) => {
     </span>
   );
 
+  const submitHandler = (event) => {
+    event.preventDefault();
+    changePhaseHandler('complete');
+  };
   return (
     <Form>
       <Form.Group controlId="terms-and-conditions">
@@ -35,11 +39,7 @@ const SummaryForm = ({ changePhaseHandler }) => {
           onChange={checkboxHandler}
           label={checkboxLabel}
         />
-        <Button
-          variant="primary"
-          disabled={!isChecked}
-          onClick={() => changePhaseHandler('complete')}
-        >
+        <Button disabled={!isChecked} type="submit" onClick={submitHandler}>
           Confirm order
         </Button>
       </Form.Group>

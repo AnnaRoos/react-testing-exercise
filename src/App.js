@@ -8,6 +8,7 @@ import { OrderDetailsProvider } from './contexts/OrderDetails';
 import OrderConfirmation from './pages/confirmation/OrderConfirmation';
 
 function App() {
+  //phases are 'inProgress', 'review' or 'complete'
   const [orderPhase, setOrderPhase] = useState('inProgress');
 
   const changePhaseHandler = (phase) => {
@@ -15,8 +16,8 @@ function App() {
   };
 
   return (
-    <Container>
-      <OrderDetailsProvider>
+    <OrderDetailsProvider>
+      <Container>
         {orderPhase === 'inProgress' && (
           <OrderEntry changePhaseHandler={changePhaseHandler} />
         )}
@@ -26,9 +27,34 @@ function App() {
         {orderPhase === 'complete' && (
           <OrderConfirmation changePhaseHandler={changePhaseHandler} />
         )}
-      </OrderDetailsProvider>
-    </Container>
+      </Container>
+    </OrderDetailsProvider>
   );
 }
 
 export default App;
+
+//Tutorial version:
+
+/* let Component = OrderEntry;
+switch (orderPhase) {
+  case 'inProgress':
+    Component = OrderEntry;
+    break;
+  case 'review':
+    Component = OrderSummary;
+    break;
+  case 'complete':
+    Component = OrderConfirmation;
+    break;
+  default:
+    break;
+}
+
+return (
+  <OrderDetailsProvider>
+    <Container>
+      {<Component setOrderPhase={setOrderPhase} />}
+    </Container>
+  </OrderDetailsProvider>
+); */

@@ -13,7 +13,7 @@ const OrderEntry = ({ changePhaseHandler }) => {
       <Options optionType="scoops" />
       <Options optionType="toppings" />
       <h2>Grand total: {orderDetails.totals.grandTotal}</h2>
-      <Button variant="primary" onClick={() => changePhaseHandler('review')}>
+      <Button onClick={() => changePhaseHandler('review')}>
         Order Sundae!
       </Button>
     </div>
