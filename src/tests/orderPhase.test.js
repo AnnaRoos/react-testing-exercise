@@ -117,4 +117,32 @@ describe('App', () => {
     await screen.findByRole('spinbutton', { name: 'Vanilla' });
     await screen.findByRole('checkbox', { name: 'Strawberry' });
   });
+
+  test('should not display toppings in summary if no toppings were added', async () => {
+    render(<App />);
+
+    //add ice cream
+    const vanillaInput = await screen.findByRole('spinbutton', {
+      name: 'Vanilla',
+    });
+    const user = userEvent.setup();
+    await user.clear(vanillaInput);
+    await user.type(vanillaInput, '2');
+
+    //click order button to move to summary
+    const orderButton = screen.getByRole('button', { name: /order sundae/i });
+    await user.click(orderButton);
+
+    //check that scoops heading is there
+    const scoopsHeading = screen.getByRole('heading', {
+      name: 'Scoops: $4.00',
+    });
+    expect(scoopsHeading).toBeInTheDocument();
+
+    //check that toppings heading is not there
+    const toppingsHeading = screen.queryByRole('heading', {
+      name: /toppings:/i,
+    });
+    expect(toppingsHeading).not.toBeInTheDocument();
+  });
 });

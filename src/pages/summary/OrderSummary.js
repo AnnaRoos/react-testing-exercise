@@ -7,25 +7,35 @@ import { useOrderDetails } from '../../contexts/OrderDetails';
 const OrderSummary = ({ changePhaseHandler }) => {
   const [orderDetails] = useOrderDetails();
 
-  const scoopsList = [...orderDetails.scoops].map((scoop) => {
+  const scoopsList = [...orderDetails.scoops].map(([key, value]) => {
     return (
-      <li key={scoop[0]}>
-        {scoop[1]} {scoop[0]}
+      <li key={key}>
+        {value} {key}
       </li>
     );
   });
 
-  const toppingsList = [...orderDetails.toppings].map((topping) => {
-    return <li key={topping[0]}>{topping[0]}</li>;
-  });
+  const hasToppings = orderDetails.toppings.size > 0;
+  let toppingsContent = null;
+  if (hasToppings) {
+    const toppingsList = [...orderDetails.toppings.keys()].map((topping) => {
+      return <li key={topping}>{topping}</li>;
+    });
+
+    toppingsContent = (
+      <>
+        <h2>Toppings: {orderDetails.totals.toppings}</h2>
+        <ul>{toppingsList}</ul>
+      </>
+    );
+  }
 
   return (
     <div>
       <h1>Order Summary</h1>
       <h2>Scoops: {orderDetails.totals.scoops}</h2>
       <ul>{scoopsList}</ul>
-      <h2>Toppings: {orderDetails.totals.toppings}</h2>
-      <ul>{toppingsList}</ul>
+      {toppingsContent}
       <h2>Total: {orderDetails.totals.grandTotal}</h2>
       <SummaryForm changePhaseHandler={changePhaseHandler} />
     </div>
