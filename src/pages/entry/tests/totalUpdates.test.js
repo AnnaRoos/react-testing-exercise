@@ -152,6 +152,7 @@ describe('grand total', () => {
 
     expect(grandTotal).toHaveTextContent('11.00');
 
+    await user.clear(chocolateInput);
     await user.type(chocolateInput, '2');
 
     expect(grandTotal).toHaveTextContent('7.00');
@@ -164,6 +165,7 @@ describe('grand total', () => {
 
     expect(grandTotal).toHaveTextContent('4.00');
 
+    await user.clear(chocolateInput);
     await user.type(chocolateInput, '0');
 
     expect(grandTotal).toHaveTextContent('0.00');
