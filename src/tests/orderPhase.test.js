@@ -1,4 +1,8 @@
-import { render, screen } from '@testing-library/react';
+import {
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
 import App from '../App';
@@ -76,12 +80,23 @@ describe('App', () => {
     });
     await user.click(confirmButton);
 
+    //the 'Loading' text should be shown when posting to the server and then disappear
+    //This is one option
+    /*     await waitForElementToBeRemoved(() => screen.queryByText(/loading/i)); */
+    //and this is another, first it is there
+    const loading = screen.getByText(/loading/i);
+    expect(loading).toBeInTheDocument();
+
     //confirm order number on confirmation page
 
     const orderNumber = await screen.findByRole('heading', {
       name: /your order number is /i,
     });
     expect(orderNumber).toHaveTextContent(/\d/);
+
+    //and now loading should be gone
+    const loadingGone = screen.queryByText(/loading/i);
+    expect(loadingGone).not.toBeInTheDocument();
 
     //click new order button on confirmation page
 
