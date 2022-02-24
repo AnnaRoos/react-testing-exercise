@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
+import AlertBanner from '../common/AlertBanner';
 import Button from 'react-bootstrap/Button';
 
 import { useOrderDetails } from '../../contexts/OrderDetails';
@@ -9,13 +10,20 @@ import { useOrderDetails } from '../../contexts/OrderDetails';
 const OrderConfirmation = ({ changePhaseHandler }) => {
   const [orderNumber, setOrderNumber] = useState(null);
   const [, , resetOrder] = useOrderDetails();
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     axios
       .post(`http://localhost:3030/order`)
       .then((response) => setOrderNumber(response.data.orderNumber))
-      .catch((error) => {});
+      .catch((error) => {
+        setError(true);
+      });
   }, []);
+
+  if (error) {
+    return <AlertBanner message={null} variant={null} />;
+  }
 
   const createNewOrderHandler = () => {
     resetOrder();
